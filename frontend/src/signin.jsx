@@ -20,7 +20,7 @@ function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("${import.meta.env.VITE_API_URL}/signin", formData);
+            await axios.post("http://localhost:3000/signin", formData);
             navigate('/main');
         } catch (error) {
             if (error.response && error.response.status === 401) {

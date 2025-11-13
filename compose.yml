@@ -1,3 +1,4 @@
+version: "3.9"
 
 services:
   frontend:
@@ -9,7 +10,8 @@ services:
       - ./frontend:/app
       - /app/node_modules
     depends_on:
-      - mongo
+      - backend
+    command: npm run dev -- --host 0.0.0.0   # <-- bind to all interfaces
 
   backend:
     build:
@@ -18,12 +20,15 @@ services:
       - "3000:3000"
     depends_on:
       - mongo
+    command: node index.js  # make sure your app listens on 0.0.0.0
+    environment:
+      - PORT=3000
 
   mongo:
     image: mongo
     restart: always
     ports:
-      - "27018:27017"
+      - "27018:27017"   # you can change to 27018 if you want
     volumes:
       - mongo_data:/data/db
 
